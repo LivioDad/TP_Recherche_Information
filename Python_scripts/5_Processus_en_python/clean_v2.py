@@ -8,9 +8,10 @@ from pathlib import Path
 import html
 
 # Répertoire de base
-BASE_DIR = Path("Collection")
+SCRIPT_DIR = Path(__file__).resolve().parent
+BASE_DIR = SCRIPT_DIR.parent / "Collection" 
 LIST_FILE = BASE_DIR / "Collection"
-OUTPUT_FILE = BASE_DIR / "Collection1.html"
+OUTPUT_FILE = SCRIPT_DIR.parent /"outputs" / "Collection1.html"
 
 # Lecture de la liste des documents
 doc_ids = []
@@ -27,6 +28,10 @@ with OUTPUT_FILE.open("w", encoding="utf-8") as out:
     out.write("<title>Collection1 - CACM (version nettoyée)</title>\n</head>\n<body>\n")
 
     for doc_id in doc_ids:
+
+        # Parcourt seulement les fichiers texte et non les fichiers HTML
+        if not doc_id.startswith("CACM"):
+            continue
 
         text_path = BASE_DIR / f"{doc_id}.flt"
         if not text_path.exists():

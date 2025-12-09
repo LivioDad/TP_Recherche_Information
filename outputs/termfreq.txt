@@ -1,0 +1,15 @@
+
+# Nouvelle série de mesures (fichiers .stp)
+algorithm 1544 1194 1.2931
+system 1103 506 2.1798
+computer 992 597 1.6616
+
+# Nouvelle série de mesures (fichiers .stp)
+algorithm 1544 1194 1.2931
+system 1103 506 2.1798
+computer 992 597 1.6616
+
+# Nouvelle série de mesures (fichiers .stp)
+algorithm 1544 1194 1.2931
+system 1103 506 2.1798
+computer 992 597 1.6616

@@ -8,9 +8,10 @@ from pathlib import Path
 import html
 
 # Répertoire de base
-BASE_DIR = Path("Collection")
+SCRIPT_DIR = Path(__file__).resolve().parent
+BASE_DIR = SCRIPT_DIR.parent / "Collection"
 LIST_FILE = BASE_DIR / "Collection"
-OUTPUT_FILE = BASE_DIR / "Collection2.html"   # version sans mots vides
+OUTPUT_FILE = SCRIPT_DIR.parent/"outputs"/"Collection2.html"   # version sans mots vides
 
 # Lecture de la liste des documents
 doc_ids = []
@@ -28,6 +29,10 @@ with OUTPUT_FILE.open("w", encoding="utf-8") as out:
 
     for doc_id in doc_ids:
 
+        # Parcourt seulement les fichiers texte et non les fichiers HTML
+        if not doc_id.startswith("CACM"):
+            continue
+        
         # Version filtrée par remove → .stp
         text_path = BASE_DIR / f"{doc_id}.stp"
         if not text_path.exists():
