@@ -8,7 +8,7 @@ from pathlib import Path
 import html
 
 # Répertoire de base
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = SCRIPT_DIR.parent / "Collection" 
 LIST_FILE = BASE_DIR / "Collection"
 OUTPUT_FILE = SCRIPT_DIR.parent /"outputs" / "Collection1.html"
@@ -45,8 +45,8 @@ with OUTPUT_FILE.open("w", encoding="utf-8") as out:
         # Ajout du numéro du document au début
         texte_final = f"[{doc_id}] " + text
 
-        # Écriture dans un <article> avec classe cacm-doc
-        out.write(f"<article class=\"cacm-doc\" id=\"{doc_id}\">\n")
+        # Écriture dans un <article> avec classe cacm
+        out.write(f"<article class=\"cacm\" id=\"{doc_id}\">\n")
         out.write(texte_final)
         out.write("\n</article>\n\n")
 
