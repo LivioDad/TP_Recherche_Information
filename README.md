@@ -16,7 +16,7 @@ Ce projet met en œuvre un pipeline complet de **préparation d’une collection
 > **Important** : la collection CACM et les fichiers intermédiaires peuvent être volumineux. Pour l’archive de rendu, suivre la consigne et **ne pas inclure** le répertoire `Collection/` ni les multiples versions de fichiers nettoyés, sauf demande explicite.
 
 ## Prérequis
-- **Python 3.10+** (recommandé)
+- **Python 3.10+** 
 - **Perl** (pour `DecodeCACMXX.pl`, `clean.pl`, `remove.pl`)
 - Librairies Python (selon scripts) :
   - `matplotlib` (graphe Zipf)
