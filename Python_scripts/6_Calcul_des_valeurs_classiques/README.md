@@ -1,4 +1,4 @@
-# 6 — Calcul des valeurs classiques (Vocabulaire & DF)
+# 6 - Calcul des valeurs classiques (Vocabulaire & DF)
 
 Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 
@@ -26,6 +26,3 @@ python vocabulary.py
 ```bash
 python df.py
 ```
-
-## Conseils
-- Les mots présents dans **tous** les documents ont un pouvoir discriminant faible (idf ≈ 0) : ils peuvent être filtrés selon l’analyse.

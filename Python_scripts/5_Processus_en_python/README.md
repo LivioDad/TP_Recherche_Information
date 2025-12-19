@@ -1,4 +1,4 @@
-# 5 — Processus en Python (Préparation des documents)
+# 5 - Processus en Python (Préparation des documents)
 
 Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 

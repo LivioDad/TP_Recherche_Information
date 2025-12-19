@@ -3,7 +3,7 @@
 Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 
 ## Objectif
-Ce projet met en œuvre un pipeline complet de **préparation d’une collection de test (CACM)**, d’**analyse statistique**, d’**indexation (fichier inverse)** et d’**interrogation** (moteur de recherche) conformément au sujet du TP. fileciteturn1file1
+Ce projet met en œuvre un pipeline complet de **préparation d’une collection de test (CACM)**, d’**analyse statistique**, d’**indexation (fichier inverse)** et d’**interrogation** (moteur de recherche) conformément au sujet du TP.
 
 ## Structure du dépôt
 - `5_Processus_en_python/` : décodage CACM → nettoyage → suppression des mots vides + versions HTML (V2)
@@ -13,7 +13,7 @@ Ce projet met en œuvre un pipeline complet de **préparation d’une collection
 - `9_Moteur_de_recherche/` : moteurs (TF-IDF cosinus + proximité)
 - `10_Informations_MAIL/` : scraping HTML & lemmatisation (Porter)
 
-> **Important** : la collection CACM et les fichiers intermédiaires peuvent être volumineux. Pour l’archive de rendu, suivre la consigne et **ne pas inclure** le répertoire `Collection/` ni les multiples versions de fichiers nettoyés, sauf demande explicite. fileciteturn1file0
+> **Important** : la collection CACM et les fichiers intermédiaires peuvent être volumineux. Pour l’archive de rendu, suivre la consigne et **ne pas inclure** le répertoire `Collection/` ni les multiples versions de fichiers nettoyés, sauf demande explicite.
 
 ## Prérequis
 - **Python 3.10+** (recommandé)
@@ -58,9 +58,3 @@ Chaque dossier contient un README local avec les détails (paramètres, fichiers
 - Si un script ne trouve pas `Collection/` ou `outputs/`, vérifier :
   - que vous lancez les commandes **depuis la racine** du projet, ou
   - adapter les chemins dans les scripts (utiliser `Path(__file__).resolve()` pour rendre les chemins robustes).
-
-## Références utiles
-- GitHub Docs — ce qu’un README devrait contenir citeturn0search0
-- Make a README — sections “standard” citeturn0search1
-- Bonnes pratiques (template) citeturn0search3
-- Recommandations “research software” citeturn0search19

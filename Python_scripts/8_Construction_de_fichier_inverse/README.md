@@ -1,10 +1,9 @@
-# 8 — Construction de fichier inverse (Index inversé)
+# 8 - Construction de fichier inverse (Index inversé)
 
 Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 
 ## Objectif
-Construire l’**index inversé** : pour chaque terme du vocabulaire, lister les documents qui le contiennent. fileciteturn1file1
-
+Construire l’**index inversé** : pour chaque terme du vocabulaire, lister les documents qui le contiennent.
 ## Script
 ### `indexInverse.py`
 Méthode (conforme aux indications du TP) :

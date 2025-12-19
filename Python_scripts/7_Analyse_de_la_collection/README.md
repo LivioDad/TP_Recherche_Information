@@ -1,4 +1,4 @@
-# 7 — Analyse de la collection
+# 7 - Analyse de la collection
 
 Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 
@@ -59,4 +59,3 @@ python vecteurTFIDF.py
 
 ## Notes importantes
 - Ces scripts utilisent typiquement `outputs/vocabulaire.txt` et `outputs/df.txt` : exécuter d’abord le dossier `6_...`.
-- Supprimer `tempCodeRunnerFile.py` de la version finale (fichier VSCode, non demandé).

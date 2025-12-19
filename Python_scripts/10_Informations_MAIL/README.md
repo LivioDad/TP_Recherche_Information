@@ -1,4 +1,4 @@
-# 10 — Informations MAIL (Scraping & Lemmatisation)
+# 10 - Informations MAIL (Scraping & Lemmatisation)
 
 Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 

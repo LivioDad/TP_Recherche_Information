@@ -1,4 +1,4 @@
-# 9 — Moteur de recherche
+# 9 - Moteur de recherche
 
 Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 
