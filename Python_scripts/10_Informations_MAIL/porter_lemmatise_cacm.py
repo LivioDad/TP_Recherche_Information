@@ -1,16 +1,9 @@
 """
-porter_lemmatise_cacm.py
-
-Crée une troisième version de la collection CACM à partir du HTML,
-en appliquant le stemmer de Porter (NLTK) sur le texte des articles.
-
-Entrée :
-  - outputs/CollectionX.html   (balises <article class="cacm" id="...">)
-
-Sortie :
-  - Dossier "Collection_porter/"
-       * <ID>.stp       : texte stemmé par Porter
-       * Collection     : liste des IDs de docs
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: porter_lemmatise_cacm.py
+Objectif du programme:
+    Appliquer l’algorithme de Porter Stemmer aux documents CACM
+    afin de produire une version lemmatisée de la collection.
 """
 
 from pathlib import Path
@@ -18,7 +11,7 @@ from bs4 import BeautifulSoup
 from nltk.stem.porter import PorterStemmer
 import re
 
-HTML_FILE = Path("outputs/Collection2.html") # dans 1 il y a les stopwords, dans 2 non 
+HTML_FILE = Path("outputs/Collection2.html")  # dans 1 il y a les stopwords, dans 2 non
 
 OUT_DIR = Path("Collection_porter")
 OUT_COLLECTION_LIST = OUT_DIR / "Collection"
@@ -36,7 +29,6 @@ def tokenizer_simple(texte: str):
       - tout en minuscules
       - enlève ponctuation de base
       - split sur les espaces
-    Pour quelque chose de plus riche, on peut utiliser nltk.tokenize.:contentReference[oaicite:4]{index=4}
     """
     texte = texte.lower()
     # Remplacer tout ce qui n'est pas lettre ou chiffre par un espace
@@ -53,7 +45,6 @@ def main() -> None:
         soup = BeautifulSoup(f, "html.parser")
 
     corpus = soup.find_all("article", class_="cacm-doc")
-
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 

@@ -1,14 +1,9 @@
 """
-scrape_cacm_html.py
-
-Scrape la page HTML "CollectionX.html" contenant
-les articles CACM (balises <article class="cacm" id="...">)
-et crée un nouveau jeu de fichiers texte.
-
-Résultats :
-  - Dossier "Collection_html/"
-       * un fichier par article : <ID>.txt  (ex: CACM-0001.txt)
-       * fichier "Collection_html/Collection" listant les IDs (sans suffixe)
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: scrape_cacm_html.py
+Objectif du programme:
+    Extraire automatiquement le contenu des documents CACM
+    à partir des fichiers HTML de la collection.
 """
 
 from pathlib import Path
@@ -29,7 +24,6 @@ def extraire_texte_article(article) -> str:
       - on enlève les balises de mise en forme
       - on récupère le texte brut avec get_text()
     """
-    # Version simple (tout le texte de l'article)
     texte = article.get_text(" ", strip=True)
     return texte
 

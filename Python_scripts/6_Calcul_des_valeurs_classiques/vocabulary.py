@@ -1,7 +1,15 @@
+"""
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: vocabulary.py
+Objectif du programme:
+    Construire le vocabulaire de la collection en extrayant l’ensemble des mots distincts
+    à partir des documents textuels.
+"""
+
 from pathlib import Path
 
 vocabulaire = []
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = SCRIPT_DIR.parent / "Collection"
 OUTPUT_FILE = SCRIPT_DIR.parent/"outputs"/"vocabulaire.txt"
 

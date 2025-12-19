@@ -1,20 +1,9 @@
 """
-Moteur de recherche basé sur la pondération tf.idf + similarité cosinus.
-
-Références :
-- tf.idf classique avec idf(t) = log(N / df(t)) (Sparck Jones, repris par Savoy).:contentReference[oaicite:2]{index=2}
-- Normalisation par le cosinus / produit scalaire sur les vecteurs pondérés.:contentReference[oaicite:3]{index=3}
-
-Entrées :
-  - Collection/Collection            : liste des documents (ex. CACM-0001)
-  - Collection/<doc>.stp             : texte nettoyé
-  - outputs/vocabulaire.txt          : un mot par ligne
-  - outputs/df.txt                   : "mot df"
-  - outputs/vecteurTF.txt            : "id:tf id:tf ..." une ligne par doc
-
-Usage :
-  python moteur_tfidf.py
-  (puis saisir une requête en texte libre)
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: moteur_tfidf.py
+Objectif du programme:
+    Implémenter un moteur de recherche basé sur la similarité TF-IDF
+    afin de classer les documents selon leur pertinence par rapport à une requête.
 """
 
 from pathlib import Path
@@ -44,7 +33,7 @@ def charger_vocabulaire(path_vocab: Path):
 
 
 def charger_df(path_df: Path):
-    """Charge df(t) : renvoie dict mot -> df, et N_docs (nb total doc)."""
+    """Charge df(t) : renvoie dict mot -> df."""
     df_mot = {}
 
     with path_df.open("r", encoding="utf-8") as f:
@@ -63,7 +52,6 @@ def charger_df(path_df: Path):
                 continue
             df_mot[mot] = df
 
-    # N_docs = max df possible => on le prendra plutôt depuis Collection
     return df_mot
 
 
@@ -146,7 +134,6 @@ def construire_vecteur_requete(query: str,
     Construit le vecteur tf.idf de la requête et sa norme.
     Retourne (vec, norm) avec vec : {idTerme: poids_tfidf}.
     """
-    # nettoyage minimal (les docs .stp sont déjà en minuscules sans ponctuation)
     mots = query.lower().split()
 
     # tf dans la requête
@@ -204,9 +191,83 @@ def recherche_tfidf(query: str,
         if score > 0.0:
             resultats.append((score, docs[doc_idx]))
 
-    # tri décroissant
     resultats.sort(reverse=True, key=lambda x: x[0])
     return resultats[:max_resultats]
+
+
+from datetime import datetime
+from urllib.parse import quote
+
+RESULTS_DIR = Path("outputs")
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def ecrire_resultats_html(
+    moteur_nom: str,
+    query: str,
+    resultats: list[tuple[float, str]],
+    output_path: Path,
+    collection_dir: Path,
+    extension: str = ".stp",
+) -> None:
+    """
+    Génère une page HTML contenant les résultats et un lien cliquable vers chaque document.
+    resultats : liste de tuples (score, doc_id).
+    """
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    rows = []
+    for rank, (score, doc_id) in enumerate(resultats, start=1):
+        rel = f"../{collection_dir.as_posix()}/{doc_id}{extension}"
+        href = quote(rel, safe="/:._-")
+        rows.append(
+            f"<tr>"
+            f"<td>{rank}</td>"
+            f"<td>{doc_id}</td>"
+            f"<td>{score:.6f}</td>"
+            f"<td><a href='{href}' target='_blank' rel='noopener'>ouvrir</a></td>"
+            f"</tr>"
+        )
+
+    html = f"""<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Résultats — {moteur_nom}</title>
+  <style>
+    body {{ font-family: Arial, sans-serif; margin: 24px; }}
+    code {{ background: #f4f4f4; padding: 2px 4px; border-radius: 4px; }}
+    table {{ border-collapse: collapse; width: 100%; margin-top: 16px; }}
+    th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+    th {{ background: #f7f7f7; }}
+  </style>
+</head>
+<body>
+  <h1>Résultats — {moteur_nom}</h1>
+  <p><b>Requête :</b> <code>{query}</code></p>
+  <p><b>Généré le :</b> {now}</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Document</th>
+        <th>Score</th>
+        <th>Lien</th>
+      </tr>
+    </thead>
+    <tbody>
+      {"".join(rows) if rows else "<tr><td colspan='4'>Aucun résultat.</td></tr>"}
+    </tbody>
+  </table>
+
+  <p style="margin-top:16px; font-size: 0.9em; color: #666;">
+    Astuce: ouvrez ce fichier avec un navigateur (double-clic) pour cliquer les liens.
+  </p>
+</body>
+</html>
+"""
+    output_path.write_text(html, encoding="utf-8")
 
 
 def main():
@@ -249,9 +310,19 @@ def main():
 
         print("\nTop documents :")
         for score, nom_doc in res:
-            # On construit un lien HTML vers le fichier local
             lien = f"Collection/{nom_doc}.stp"
             print(f"- {nom_doc}  (score = {score:.4f})  -> {lien}")
+
+        out_html = RESULTS_DIR / "resultats_tfidf.html"
+        ecrire_resultats_html(
+            moteur_nom="TF-IDF (cosinus)",
+            query=query,
+            resultats=res,
+            output_path=out_html,
+            collection_dir=COLLECTION_DIR,
+            extension=".stp",
+        )
+        print(f"\nRésultats HTML écrits dans : {out_html}")
 
 
 if __name__ == "__main__":

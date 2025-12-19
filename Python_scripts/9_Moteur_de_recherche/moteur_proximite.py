@@ -1,21 +1,12 @@
 """
-Moteur de recherche basé sur la proximité floue (Annabelle Mercier, Michel Beigbeder).
-
-Idée :
-  - Chaque occurrence d'un terme de la requête a une "zone d'influence" (fonction triangulaire).
-  - À chaque position x du document, on garde la proximité max aux occurrences
-    de tous les termes de la requête : p_q^d(x).
-  - Score du document : s(q,d) = somme_x p_q^d(x).
-
-Entrées :
-  - Collection/Collection   : liste des documents
-  - Collection/<doc>.stp    : texte nettoyé, tokens séparés par des espaces
-
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: moteur_proximite.py
+Objectif du programme:
+    Implémenter un moteur de recherche basé sur la proximité des termes
+    afin d’évaluer la pertinence des documents par rapport à une requête.
 Usage :
   python moteur_proximite.py            # k = 5 par défaut
   python moteur_proximite.py 10         # k = 10
-
-Puis saisir une requête en texte libre.
 """
 
 from pathlib import Path
@@ -107,6 +98,81 @@ def recherche_proximite(query: str, docs, k: int, max_resultats: int = 20):
     return resultats[:max_resultats]
 
 
+from datetime import datetime
+from urllib.parse import quote
+
+RESULTS_DIR = Path("outputs")
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def ecrire_resultats_html(
+    moteur_nom: str,
+    query: str,
+    resultats: list[tuple[float, str]],
+    output_path: Path,
+    collection_dir: Path,
+    extension: str = ".stp",
+) -> None:
+    """
+    Génère une page HTML contenant les résultats et un lien cliquable vers chaque document.
+    resultats : liste de tuples (score, doc_id).
+    """
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    rows = []
+    for rank, (score, doc_id) in enumerate(resultats, start=1):
+        rel = f"../{collection_dir.as_posix()}/{doc_id}{extension}"
+        href = quote(rel, safe="/:._-")
+        rows.append(
+            f"<tr>"
+            f"<td>{rank}</td>"
+            f"<td>{doc_id}</td>"
+            f"<td>{score:.6f}</td>"
+            f"<td><a href='{href}' target='_blank' rel='noopener'>ouvrir</a></td>"
+            f"</tr>"
+        )
+
+    html = f"""<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Résultats — {moteur_nom}</title>
+  <style>
+    body {{ font-family: Arial, sans-serif; margin: 24px; }}
+    code {{ background: #f4f4f4; padding: 2px 4px; border-radius: 4px; }}
+    table {{ border-collapse: collapse; width: 100%; margin-top: 16px; }}
+    th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+    th {{ background: #f7f7f7; }}
+  </style>
+</head>
+<body>
+  <h1>Résultats — {moteur_nom}</h1>
+  <p><b>Requête :</b> <code>{query}</code></p>
+  <p><b>Généré le :</b> {now}</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Document</th>
+        <th>Score</th>
+        <th>Lien</th>
+      </tr>
+    </thead>
+    <tbody>
+      {"".join(rows) if rows else "<tr><td colspan='4'>Aucun résultat.</td></tr>"}
+    </tbody>
+  </table>
+
+  <p style="margin-top:16px; font-size: 0.9em; color: #666;">
+    Astuce: ouvrez ce fichier avec un navigateur (double-clic) pour cliquer les liens.
+  </p>
+</body>
+</html>
+"""
+    output_path.write_text(html, encoding="utf-8")
+    
+
 def main():
     if not COLLECTION_DIR.is_dir():
         raise SystemExit(f"Dossier introuvable : {COLLECTION_DIR}")
@@ -114,7 +180,6 @@ def main():
         raise SystemExit(f"Fichier introuvable : {DOC_LIST_FILE}")
 
     # Paramètre k : portée de l'influence des occurrences
-    # k ~ 5 => proximité type "expression", k ~ 15–30 => "phrase".:contentReference[oaicite:8]{index=8}
     if len(sys.argv) >= 2:
         try:
             k = int(sys.argv[1])
@@ -147,6 +212,17 @@ def main():
         for score, nom_doc in res:
             lien = f"Collection/{nom_doc}.stp"
             print(f"- {nom_doc}  (score = {score:.4f})  -> {lien}")
+
+        out_html = RESULTS_DIR / "resultats_proximite.html"
+        ecrire_resultats_html(
+            moteur_nom=f"Proximité floue (k={k})",
+            query=query,
+            resultats=res,
+            output_path=out_html,
+            collection_dir=COLLECTION_DIR,
+            extension=".stp",
+        )
+        print(f"\nRésultats HTML écrits dans : {out_html}")
 
 
 if __name__ == "__main__":

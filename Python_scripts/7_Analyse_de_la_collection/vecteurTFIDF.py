@@ -1,19 +1,11 @@
 """
-vecteurTFIDF.py
-
-Construit la représentation vectorielle tf.idf des documents.
-
-Entrées :
-  - "outputs/vocabulaire.txt" : un mot par ligne.
-  - "outputs/df.txt" : lignes de la forme "mot df".
-  - "Collection/Collection" : liste des documents (ex : CACM-0001).
-  - "Collection/<doc>.stp" : textes nettoyés et sans mots vides.
-
-Sortie :
-  - "outputs/vecteurTFIDF.txt" : une ligne par document.
-    Chaque ligne contient les couples "idTerme:tfidf" triés par idTerme,
-    par exemple : 1:0.532421 3:1.204587 ...
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: vecteurTFIDF.py
+Objectif du programme:
+    Construire les vecteurs TF-IDF des documents en combinant
+    la fréquence des termes et la fréquence documentaire.
 """
+
 
 from pathlib import Path
 import math

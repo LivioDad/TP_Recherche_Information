@@ -9,7 +9,7 @@ dans les documents où ils apparaissent (version générique par type de fichier
 from pathlib import Path
 
 # Répertoires et fichiers
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = SCRIPT_DIR.parent / "Collection"
 OUTPUT_FILE = SCRIPT_DIR.parent / "outputs" / "termfreq.txt"
 
@@ -24,7 +24,7 @@ TERMS = [
 ]
 
 # Ouverture du fichier de sortie
-with OUTPUT_FILE.open("a", encoding="utf-8") as out:
+with OUTPUT_FILE.open("w", encoding="utf-8") as out:
 
     # Petite separation pour une nouvelle série de tests
     out.write("\n# Nouvelle série de mesures (fichiers " + INPUT_FILE_TYPE + ")\n")

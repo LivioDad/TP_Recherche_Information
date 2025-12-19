@@ -1,18 +1,11 @@
 """
-vecteurTF.py
-
-Construit la représentation vectorielle en fréquence (tf) des documents.
-
-Entrées :
-  - "vocabulaire.txt" : un mot par ligne.
-  - "Collection/Collection" : liste des documents (ex : CACM-0001).
-  - "Collection/<doc>.stp" : textes nettoyés et sans mots vides.
-
-Sortie :
-  - "vecteurTF.txt" : une ligne par document.
-    Chaque ligne contient les couples "idTerme:tf" triés par idTerme,
-    par exemple : 1:2 3:5 7:1
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: vecteurTF.py
+Objectif du programme:
+    Construire les vecteurs de fréquence des termes (TF)
+    pour chaque document de la collection.
 """
+
 
 from pathlib import Path
 

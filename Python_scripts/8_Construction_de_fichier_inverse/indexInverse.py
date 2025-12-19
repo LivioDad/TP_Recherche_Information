@@ -1,18 +1,11 @@
 """
-indexInverse.py
-
-Construit l'index inversé des termes à partir de la collection.
-
-Entrées :
-  - "outputs/vocabulaire.txt" : un mot par ligne.
-  - "Collection/Collection"   : liste des documents (ex : CACM-0001).
-  - "Collection/<doc>.stp"    : version filtrée des documents.
-
-Sortie :
-  - "outputs/indexInverse.txt" :
-      une ligne par terme de la forme :
-      idTerme mot doc1 doc2 doc3 ...
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: indexInverse.py
+Objectif du programme:
+    Construire un index inversé associant chaque terme du vocabulaire
+    à la liste des documents dans lesquels il apparaît.
 """
+
 
 from pathlib import Path
 

@@ -1,37 +1,74 @@
-# Ouvre le fichier CACM et cree les fichiers de contenu
+#
+# Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+# Nom du fichier: DecodeCACMXX.pl
+# Objectif du programme:
+#   Décoder les fichiers CACM au format original et produire des fichiers texte intermédiaires exploitables
+#   pour les étapes suivantes de nettoyage et de filtrage.
+#
+use strict;
+use warnings;
+use utf8;
 
-   open(F,"cacm.all") || die "Erreur d'ouverture du fichier $FileName\n";
-   my $str="";
-   my $Num=0;
-   my $Path="Collection";
+use FindBin qw($Bin);
+use File::Spec;
+use File::Path qw(make_path);
 
-   open(COL,">$Path/Collection") || die "Erreur de creation de Collection\n";
-   while(!eof(F)){
-     if($str =~m /\.I\s/){ # On regarde si s$tr contient la cha�ne .I
-        close(NF);
-        $str =~s/\.I\s//g; # Dans $str, on supprime la cha�ne .I avant le numéro de document
-        $Num=$str;
-        print COL "CACM-$Num\n";
+my $BASE_DIR = File::Spec->catdir($Bin, '..', '..');
+my $COL_DIR  = File::Spec->catdir($BASE_DIR, 'Collection');
+
+if (!-d $COL_DIR) {
+    make_path($COL_DIR) or die "Erreur: impossible de créer le dossier Collection: $COL_DIR\n";
+}
+
+my $CACM_ALL = File::Spec->catfile($Bin, 'cacm.all');
+open(my $F, '<', $CACM_ALL) or die "Erreur d'ouverture du fichier $CACM_ALL\n";
+
+my $collection_list = File::Spec->catfile($COL_DIR, 'Collection');
+open(my $COL, '>', $collection_list) or die "Erreur de creation de Collection\n";
+
+my $str  = "";
+my $Num  = 0;
+my $Go   = 0;
+my $Path = $COL_DIR;
+
+my $NF;
+
+while (!eof($F)) {
+
+    if ($str =~ /\.I\s/) {
+        close($NF) if defined $NF;
+        $str =~ s/\.I\s//g;
+        $Num = $str;
+        print $COL "CACM-$Num\n";
         print "Processing ... CACM-$Num\n";
-        open(NF,">$Path/CACM-$Num");
-     }
-     if(($str=~ m/\.T/) || ($str=~ m/\.A/) || ($str=~ m/\.W/) || ($str=~ m/\.B/)) { # Si $str contient une des balises que l'on veut 
-        $Go=1;
-        while($Go==1){  # Tant que l'on ne rencontre pas une nouvelle balise
-           chop($str=<F>);
-           if(($str eq "\.W") || ($str eq "\.B") || ($str eq "\.N") || ($str eq "\.A") || ($str eq "\.X") || ($str eq "\.K") || ($str eq "\.T") || ($str eq "\.I")){
-             $Go=0;
-             break;
-           }
-           else{
-             print NF "$str "; # On écrit le contenu dans le fichier CACM-XX
-           }
+        my $out_doc = File::Spec->catfile($Path, "CACM-$Num");
+        open($NF, '>', $out_doc) or die "Erreur d'ouverture/creation du fichier $out_doc\n";
+    }
+
+    if (($str =~ /\.T/) || ($str =~ /\.A/) || ($str =~ /\.W/) || ($str =~ /\.B/)) {
+        $Go = 1;
+        while ($Go == 1) {
+            my $line = <$F>;
+            last unless defined $line;
+            chomp($line);
+            $str = $line;
+
+            if (($str eq ".W") || ($str eq ".B") || ($str eq ".N") || ($str eq ".A") ||
+                ($str eq ".X") || ($str eq ".K") || ($str eq ".T") || ($str eq ".I")) {
+                $Go = 0;
+                last;
+            } else {
+                print $NF "$str " if defined $NF;
+            }
         }
-     }
-     else{
-       chop($str=<F>);
-     }
-  }
-  close(F);
+    } else {
+        my $line = <$F>;
+        last unless defined $line;
+        chomp($line);
+        $str = $line;
+    }
+}
 
-
+close($NF) if defined $NF;
+close($COL);
+close($F);

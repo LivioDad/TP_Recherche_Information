@@ -8,7 +8,7 @@ et écrire dans counter.txt les lignes: rang  compte  mot, triées par fréquenc
 from pathlib import Path
 
 # Répertoires et fichiers
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = SCRIPT_DIR.parent / "Collection"
 OUTPUT_FILE = SCRIPT_DIR.parent / "outputs" / "counter.txt"
 

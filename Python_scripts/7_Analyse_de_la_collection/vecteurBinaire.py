@@ -1,18 +1,11 @@
 """
-vecteurBinaire.py
-
-Construit la représentation vectorielle binaire des documents.
-
-Entrées :
-  - "vocabulaire.txt" : un mot par ligne.
-  - "Collection/Collection" : liste des documents (ex : CACM-0001).
-  - "Collection/<doc>.stp" : textes nettoyés et sans mots vides.
-
-Sortie :
-  - "vecteurBinaire.txt" : une ligne par document.
-    Chaque ligne contient les couples "idTerme:1" triés par idTerme,
-    par exemple : 1:1 3:1 7:1
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: vecteurBinaire.py
+Objectif du programme:
+    Construire les vecteurs binaires des documents indiquant
+    la présence ou l’absence de chaque terme du vocabulaire.
 """
+
 
 from pathlib import Path
 

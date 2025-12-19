@@ -1,6 +1,14 @@
+"""
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: df.py
+Objectif du programme:
+    Calculer la fréquence documentaire (DF) de chaque terme du vocabulaire,
+    c’est-à-dire le nombre de documents dans lesquels il apparaît.
+"""
+
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = SCRIPT_DIR.parent / "Collection"
 OUTPUT_FILE = SCRIPT_DIR.parent/"outputs"/"df.txt"
 INPUT_FILE_TYPE = ".stp" # Choisir entre ".stp" et ".flt"

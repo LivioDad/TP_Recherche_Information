@@ -1,16 +1,11 @@
 """
-zipf_plot.py
-
-Lit le fichier outputs/counter.txt (rang, fréquence, mot)
-et génère un graphique log-log (loi de Zipf) dans outputs/zipf_plot.png.
-
-Fonctionnalités :
-- Lecture du mot (3ᵉ colonne) en plus du rang et de la fréquence
-- Vérifications basiques sur les données
-- Régression linéaire sur les données log-log pour estimer l'exposant de Zipf
-- Sélection de quelques mots répartis sur tous les rangs (en échelle log)
-- Annotation lisible : offsets alternés, petites flèches, contour blanc du texte
+Auteurs: Livio Dadone, Gabriel Bragança De Oliveira
+Nom du fichier: zipf_plot.py
+Objectif du programme:
+    Générer un graphique illustrant la loi de Zipf en représentant
+    la fréquence des mots en fonction de leur rang.
 """
+
 
 from __future__ import annotations
 
@@ -25,7 +20,7 @@ from itertools import cycle
 
 
 # Répertoires
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = SCRIPT_DIR.parent
 COUNTER_FILE = BASE_DIR / "outputs" / "counter.txt"
 OUTPUT_PNG = BASE_DIR / "outputs" / "zipf_plot.png"
