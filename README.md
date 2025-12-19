@@ -1,4 +1,4 @@
-# TP_Recherche_Information# TP Recherche d’Informations (CACM) — Scripts & Résultats
+# TP Recherche d’Informations (CACM) - Scripts & Résultats
 
 Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 
