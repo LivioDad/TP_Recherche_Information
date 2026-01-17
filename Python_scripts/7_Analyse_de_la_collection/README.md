@@ -6,7 +6,7 @@ Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 Analyser la collection :
 - fréquence des termes, terme(s) les plus fréquents,
 - visualisation de la **loi de Zipf**,
-- création de représentations vectorielles (binaire, TF, TF-IDF). fileciteturn1file1
+- création de représentations vectorielles (binaire, TF, TF-IDF).
 
 ## Scripts
 ### `count.py`

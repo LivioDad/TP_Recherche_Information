@@ -7,15 +7,16 @@ Objectif du programme:
 """
 
 from pathlib import Path
-import math
+import math, os
 
 # Chemins
-COLLECTION_DIR = Path("Collection")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+COLLECTION_DIR = PROJECT_ROOT / "Collection"
 DOC_LIST_FILE = COLLECTION_DIR / "Collection"
-VOCAB_FILE = Path("outputs/vocabulaire.txt")
-DF_FILE = Path("outputs/df.txt")
-VECT_TF_FILE = Path("outputs/vecteurTF.txt")
-
+OUTPUTS_DIR = PROJECT_ROOT / "outputs"
+VOCAB_FILE = OUTPUTS_DIR / "vocabulaire.txt"
+DF_FILE = OUTPUTS_DIR / "df.txt"
+VECT_TF_FILE = OUTPUTS_DIR / "vecteurTF.txt"
 
 def charger_vocabulaire(path_vocab: Path):
     """Retourne deux structures : mot->idTerme, idTerme->mot."""
@@ -198,7 +199,7 @@ def recherche_tfidf(query: str,
 from datetime import datetime
 from urllib.parse import quote
 
-RESULTS_DIR = Path("outputs")
+RESULTS_DIR = OUTPUTS_DIR
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -218,7 +219,9 @@ def ecrire_resultats_html(
 
     rows = []
     for rank, (score, doc_id) in enumerate(resultats, start=1):
-        rel = f"../{collection_dir.as_posix()}/{doc_id}{extension}"
+        doc_path = (collection_dir / f"{doc_id}{extension}").resolve()
+        rel = os.path.relpath(doc_path, start=output_path.parent.resolve())
+        rel = rel.replace("\\", "/")
         href = quote(rel, safe="/:._-")
         rows.append(
             f"<tr>"

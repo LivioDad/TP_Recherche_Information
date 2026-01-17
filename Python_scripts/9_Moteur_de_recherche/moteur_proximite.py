@@ -10,9 +10,10 @@ Usage :
 """
 
 from pathlib import Path
-import sys
+import sys, os
 
-COLLECTION_DIR = Path("Collection")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+COLLECTION_DIR = PROJECT_ROOT / "Collection"
 DOC_LIST_FILE = COLLECTION_DIR / "Collection"
 
 
@@ -101,7 +102,7 @@ def recherche_proximite(query: str, docs, k: int, max_resultats: int = 20):
 from datetime import datetime
 from urllib.parse import quote
 
-RESULTS_DIR = Path("outputs")
+RESULTS_DIR  = PROJECT_ROOT / "outputs"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -121,7 +122,9 @@ def ecrire_resultats_html(
 
     rows = []
     for rank, (score, doc_id) in enumerate(resultats, start=1):
-        rel = f"../{collection_dir.as_posix()}/{doc_id}{extension}"
+        doc_path = (collection_dir / f"{doc_id}{extension}").resolve()
+        rel = os.path.relpath(doc_path, start=output_path.parent.resolve())
+        rel = rel.replace("\\", "/")
         href = quote(rel, safe="/:._-")
         rows.append(
             f"<tr>"

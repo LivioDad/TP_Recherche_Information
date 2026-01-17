@@ -6,7 +6,7 @@ Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 Exploiter la version HTML de la collection (V2) pour :
 - **scraper** les documents via BeautifulSoup,
 - produire une nouvelle version textuelle,
-- appliquer une lemmatisation/racinisation (Porter) avec NLTK. fileciteturn1file1
+- appliquer une lemmatisation/racinisation (Porter) avec NLTK.
 
 ## Scripts
 ### `scrape_cacm_html.py`

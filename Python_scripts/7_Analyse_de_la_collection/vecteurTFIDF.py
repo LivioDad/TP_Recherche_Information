@@ -11,11 +11,13 @@ from pathlib import Path
 import math
 
 # Chemins
-COLLECTION_DIR = Path("Collection")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+COLLECTION_DIR = PROJECT_ROOT / "Collection"
+OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 DOC_LIST_FILE = COLLECTION_DIR / "Collection"
-VOCAB_FILE = Path("outputs/vocabulaire.txt")
-DF_FILE = Path("outputs/df.txt")
-OUTPUT_FILE = Path("outputs/vecteurTFIDF.txt")
+VOCAB_FILE = OUTPUTS_DIR / "vocabulaire.txt"
+DF_FILE = OUTPUTS_DIR / "df.txt"
+OUTPUT_FILE = OUTPUTS_DIR / "vecteurTFIDF.txt"
 
 
 def charger_vocabulaire(path_vocab: Path) -> dict:
@@ -114,6 +116,7 @@ def tfidf_pour_document(doc_path: Path, index_vocab: dict, idf_par_id: dict) -> 
 
 
 def main() -> None:
+    OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     # Vérifications de base
     if not COLLECTION_DIR.is_dir():
         raise SystemExit(f"Dossier introuvable : {COLLECTION_DIR}")

@@ -9,11 +9,12 @@ Objectif du programme:
 
 from pathlib import Path
 
-# Constantes de chemins
-COLLECTION_DIR = Path("Collection")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+COLLECTION_DIR = PROJECT_ROOT / "Collection"
+OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 DOC_LIST_FILE = COLLECTION_DIR / "Collection"
-VOCAB_FILE = Path("outputs/vocabulaire.txt")
-OUTPUT_FILE = Path("outputs/vecteurBinaire.txt")
+VOCAB_FILE = OUTPUTS_DIR / "vocabulaire.txt"
+OUTPUT_FILE = OUTPUTS_DIR / "vecteurBinaire.txt"
 
 
 def charger_vocabulaire(path_vocab: Path) -> dict:
@@ -62,6 +63,7 @@ def vecteur_binaire_pour_document(doc_path: Path, index_vocab: dict) -> str:
 
 
 def main() -> None:
+    OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     # Vérification de l'existence du dossier Collection
     if not COLLECTION_DIR.is_dir():
         raise SystemExit(f"Dossier introuvable : {COLLECTION_DIR}")

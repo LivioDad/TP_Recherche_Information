@@ -9,10 +9,12 @@ Objectif du programme:
 
 from pathlib import Path
 
-COLLECTION_DIR = Path("Collection")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+COLLECTION_DIR = PROJECT_ROOT / "Collection"
+OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 DOC_LIST_FILE = COLLECTION_DIR / "Collection"
-VOCAB_FILE = Path("outputs/vocabulaire.txt")
-OUTPUT_FILE = Path("outputs/vecteurTF.txt")
+VOCAB_FILE = OUTPUTS_DIR / "vocabulaire.txt"
+OUTPUT_FILE = OUTPUTS_DIR / "vecteurTF.txt"
 
 
 def charger_vocabulaire(path_vocab: Path) -> dict:
@@ -49,6 +51,7 @@ def vecteur_tf_pour_document(doc_path: Path, index_vocab: dict) -> str:
 
 
 def main() -> None:
+    OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     if not COLLECTION_DIR.is_dir():
         raise SystemExit(f"Dossier introuvable : {COLLECTION_DIR}")
     if not VOCAB_FILE.is_file():

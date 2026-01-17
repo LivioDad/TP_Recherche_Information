@@ -5,7 +5,7 @@ Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 ## Objectif
 Calculer les valeurs de base pour la RI :
 - **vocabulaire** de la collection (un mot par ligne),
-- **df** (document frequency) : pour chaque terme, le nombre de documents qui le contiennent. fileciteturn1file1
+- **df** (document frequency) : pour chaque terme, le nombre de documents qui le contiennent.
 
 ## Scripts
 ### `vocabulary.py`

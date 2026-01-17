@@ -5,7 +5,7 @@ Auteurs : **Livio Dadone**, **Gabriel Bragança De Oliveira**
 ## Objectif
 Interroger la collection CACM avec une requête et produire :
 - un classement des documents,
-- un fichier HTML de résultats avec liens vers les documents. fileciteturn1file1
+- un fichier HTML de résultats avec liens vers les documents.
 
 Deux approches :
 1) **TF-IDF + cosinus** (baseline améliorée),  

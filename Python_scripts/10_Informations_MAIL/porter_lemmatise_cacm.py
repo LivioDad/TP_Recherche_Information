@@ -11,9 +11,11 @@ from bs4 import BeautifulSoup
 from nltk.stem.porter import PorterStemmer
 import re
 
-HTML_FILE = Path("outputs/Collection2.html")  # dans 1 il y a les stopwords, dans 2 non
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 
-OUT_DIR = Path("Collection_porter")
+HTML_FILE = OUTPUTS_DIR / "Collection2.html"  # dans 1 il y a les stopwords, dans 2 non
+OUT_DIR = PROJECT_ROOT / "Collection_porter"
 OUT_COLLECTION_LIST = OUT_DIR / "Collection"
 
 
@@ -44,7 +46,7 @@ def main() -> None:
     with HTML_FILE.open("r", encoding="utf-8") as f:
         soup = BeautifulSoup(f, "html.parser")
 
-    corpus = soup.find_all("article", class_="cacm-doc")
+    corpus = soup.find_all("article", class_="cacm")
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 

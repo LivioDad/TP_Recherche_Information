@@ -10,11 +10,12 @@ Objectif du programme:
 from pathlib import Path
 
 # Chemins
-COLLECTION_DIR = Path("Collection")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+COLLECTION_DIR = PROJECT_ROOT / "Collection"
+OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 DOC_LIST_FILE = COLLECTION_DIR / "Collection"
-VOCAB_FILE = Path("outputs/vocabulaire.txt")
-OUTPUT_FILE = Path("outputs/indexInverse.txt")
-
+VOCAB_FILE = OUTPUTS_DIR / "vocabulaire.txt"
+OUTPUT_FILE = OUTPUTS_DIR / "indexInverse.txt"
 
 def charger_vocabulaire(path_vocab: Path):
     """
@@ -100,6 +101,7 @@ def construire_index_inverse(paires: list, nb_termes: int):
 
 
 def main() -> None:
+    OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     # Vérifications de base
     if not COLLECTION_DIR.is_dir():
         raise SystemExit(f"Dossier introuvable : {COLLECTION_DIR}")

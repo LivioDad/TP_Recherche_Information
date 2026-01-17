@@ -9,11 +9,14 @@ Objectif du programme:
 from pathlib import Path
 from bs4 import BeautifulSoup
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+OUTPUTS_DIR = PROJECT_ROOT / "outputs"
+
 # Fichier HTML source
-HTML_FILE = Path("outputs/Collection2.html")
+HTML_FILE = OUTPUTS_DIR / "Collection2.html"
 
 # Nouveau dossier de collection à créer
-OUT_DIR = Path("Collection_html")
+OUT_DIR = PROJECT_ROOT / "Collection_html"
 OUT_COLLECTION_LIST = OUT_DIR / "Collection"
 
 
@@ -37,7 +40,7 @@ def main() -> None:
         soup = BeautifulSoup(f, "html.parser")
 
     # Tous les articles CACM
-    corpus = soup.find_all("article", class_="cacm-doc")
+    corpus = soup.find_all("article", class_="cacm")
 
     # Création du dossier de sortie
     OUT_DIR.mkdir(parents=True, exist_ok=True)
